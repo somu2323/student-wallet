@@ -40,7 +40,6 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            UserWallet.objects.create(user=user)
             login(request, user)
             return redirect('dashboard')
     else:
