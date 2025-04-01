@@ -1,0 +1,39 @@
+{% extends 'wallet/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center min-vh-100 py-5">
+    <div class="col-md-5">
+        <div class="card shadow-lg border-0">
+            <div class="card-body p-5">
+                <h3 class="card-title text-center mb-4">Create Account</h3>
+                <form method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="mb-4">
+                        <label for="{{ field.id_for_label }}" class="form-label fw-medium">{{ field.label }}</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">
+                                <i class="bi {% if 'username' in field.name %}bi-person{% else %}bi-lock{% endif %}"></i>
+                            </span>
+                            {{ field.errors }}
+                            <input type="{% if 'password' in field.name %}password{% else %}text{% endif %}" 
+                                   name="{{ field.name }}" 
+                                   class="form-control border-start-0 {% if field.errors %}is-invalid{% endif %}" 
+                                   id="{{ field.id_for_label }}" 
+                                   required>
+                            {% if field.help_text %}
+                            <div class="form-text text-muted small">{{ field.help_text }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">Create Account</button>
+                        <a href="{% url 'login' %}" class="btn btn-light btn-lg">Already have an account?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
